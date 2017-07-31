@@ -126,11 +126,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.fab) {
             Intent intent = new Intent(MainActivity.this, InputActivity.class);
             startActivity(intent);
-        } else if (v.getId() == R.id.button1) {
+        } else if (v.getId() == R.id.button1 && mEditText.getText().toString().length() != 0) {
             RealmResults<Task> categoryResults = mRealm.where(Task.class).equalTo("category",mEditText.getText().toString()).findAll();
             mTaskAdapter.setTaskList(mRealm.copyFromRealm(categoryResults));
             mListView.setAdapter(mTaskAdapter);
             mTaskAdapter.notifyDataSetChanged();
+        } else if (v.getId() == R.id.button1 && mEditText.getText().toString().length() == 0){
+            reloadListView();
         }
     }
 
